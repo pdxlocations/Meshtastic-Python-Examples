@@ -1,4 +1,5 @@
 import meshtastic.serial_interface
+from meshtastic import mesh_pb2
 from pubsub import pub
 
 interface = meshtastic.serial_interface.SerialInterface()
@@ -63,9 +64,18 @@ def onReceive(packet, interface):
                 print(f"      Barometric Pressure: {environment_metrics.get('barometricPressure', 'N/A')}")
 
         elif packet['decoded'].get('portnum') == 'NEIGHBORINFO_APP':
+            # Neighbor Information
             print("  Neighbor Information:")
-            payload = packet['decoded'].get('payload', b'')
-            print(f"    Payload: {payload}")
+            message = mesh_pb2.NeighborInfo()
+            payload_bytes = packet['decoded'].get('payload', b'')
+            message.ParseFromString(payload_bytes)
+            print(f"    Node ID: {message.node_id}")
+            print(f"    Last Sent By ID: {message.last_sent_by_id}")
+            print(f"    Node Broadcast Interval (secs): {message.node_broadcast_interval_secs}")
+            print("    Neighbors:")
+            for neighbor in message.neighbors:
+                print(f"      Neighbor ID: {neighbor.node_id}")
+                print(f"        SNR: {neighbor.snr}")
 
         elif packet['decoded'].get('portnum') == 'RANGE_TEST_APP':
             print("  Range Test Information:")
