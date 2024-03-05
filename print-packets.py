@@ -32,7 +32,10 @@ def onReceive(packet, interface):
             print(f"    Short Name: {node_info.get('shortName', 'N/A')}")
             print(f"    MAC Address: {node_info.get('macaddr', 'N/A')}")
             print(f"    Hardware Model: {node_info.get('hwModel', 'N/A')}")
-            print(f"    Role: {node_info.get('role', 'N/A')}")
+            if 'role' in packet:
+                print(f"    Role: {node_info.get('role', 'N/A')}")
+            if 'isLicensed' in packet:
+                print(f"    Role: {node_info.get('isLicensed', 'N/A')}")
 
         elif packet['decoded'].get('portnum') == 'POSITION_APP':
             print("  Position:")
