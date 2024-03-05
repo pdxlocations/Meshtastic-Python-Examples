@@ -1,17 +1,26 @@
 import meshtastic.serial_interface
-from meshtastic import mesh_pb2
+from meshtastic import mesh_pb2, storeforward_pb2
 from pubsub import pub
 
 interface = meshtastic.serial_interface.SerialInterface()
+
+def idToHex(nodeId):
+    return '!' + hex(nodeId)[2:]
 
 def onReceive(packet, interface):
     # Print all packets
     # print(f"{packet} \n\n") 
 
     print("Received packet:")
-    print(f"  From: {packet['from']}")
-    print(f"  To: {packet['to']}")
-    
+    print(f"  From: {packet['from']} / {idToHex(packet['from'])}")
+    print(f"  To: {packet['to']} / {idToHex(packet['to'])}")
+    if 'hopLimit' in packet:
+        print(f"  Hop Limit: {packet['hopLimit']}")
+    if 'rxSnr' in packet:
+        print(f"  SNR: {packet['rxSnr']}")
+    if 'rxRssi' in packet:
+        print(f"  RSSI: {packet['rxRssi']}")
+
     if 'decoded' in packet:
         print(f"  Port Number: {packet['decoded'].get('portnum', 'N/A')}")
         
@@ -23,6 +32,7 @@ def onReceive(packet, interface):
             print(f"    Short Name: {node_info.get('shortName', 'N/A')}")
             print(f"    MAC Address: {node_info.get('macaddr', 'N/A')}")
             print(f"    Hardware Model: {node_info.get('hwModel', 'N/A')}")
+            print(f"    Role: {node_info.get('role', 'N/A')}")
 
         elif packet['decoded'].get('portnum') == 'POSITION_APP':
             print("  Position:")
@@ -30,6 +40,13 @@ def onReceive(packet, interface):
             print(f"    Latitude: {position.get('latitude', 'N/A')}")
             print(f"    Longitude: {position.get('longitude', 'N/A')}")
             print(f"    Altitude: {position.get('altitude', 'N/A')}")
+            if 'PDOP' in position:
+                print(f"    PDOP: {position.get('PDOP', 'N/A')}")
+            if 'ground_track' in position:
+                print(f"    Ground Track: {position.get('ground_track', 'N/A')}")
+            if 'sats_in_view:' in position:
+                print(f"    Satellites in View: {position.get('sats_in_view:', 'N/A')}")
+
 
         elif packet['decoded'].get('portnum') == 'TEXT_MESSAGE_APP':
             print("  Text Message:")
@@ -69,12 +86,12 @@ def onReceive(packet, interface):
             message = mesh_pb2.NeighborInfo()
             payload_bytes = packet['decoded'].get('payload', b'')
             message.ParseFromString(payload_bytes)
-            print(f"    Node ID: {message.node_id}")
+            print(f"    Node ID: {message.node_id} / {idToHex(message.node_id)}")
             print(f"    Last Sent By ID: {message.last_sent_by_id}")
             print(f"    Node Broadcast Interval (secs): {message.node_broadcast_interval_secs}")
             print("    Neighbors:")
             for neighbor in message.neighbors:
-                print(f"      Neighbor ID: {neighbor.node_id}")
+                print(f"      Neighbor ID: {neighbor.node_id} / {idToHex(neighbor.node_id)}")
                 print(f"        SNR: {neighbor.snr}")
 
         elif packet['decoded'].get('portnum') == 'RANGE_TEST_APP':
@@ -84,8 +101,15 @@ def onReceive(packet, interface):
         
         elif packet['decoded'].get('portnum') == 'STORE_FORWARD_APP':
             print("  Store Forward Information:")
-            payload = packet['decoded'].get('payload', b'')
-            print(f"    Payload: {payload}")
+            message = storeforward_pb2.StoreAndForward()
+            payload_bytes = packet['decoded'].get('payload', b'')
+            message.ParseFromString(payload_bytes)
+            if message.HasField('stats'):
+                print(f"    Statistics: {message.stats}")
+            if message.HasField('history'):
+                print(f"    History: {message.history}")
+            if message.HasField('heartbeat'):
+                print(f"    Heartbeat: {message.heartbeat}")
 
         elif packet['decoded'].get('portnum') == 'ADMIN_APP':
             print("  Administrative Information:")
@@ -102,7 +126,7 @@ def onReceive(packet, interface):
                     print(f"        {key}: {value}")
         
         else:
-            print("  No telemetry, position, or text message data in the decoded packet.")
+            print(f"  Decoded packet does not contain data we are looking for: {packet['decoded'].get('portnum', 'N/A')}")
     else:
         print("  No 'decoded' key found in the packet. Our node doesn't have the encryption key!")
         
