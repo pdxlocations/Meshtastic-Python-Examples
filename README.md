@@ -7,3 +7,6 @@ This script will send a mesage `reply_message` every time a message is received.
 
 send-and-receive.py<br>
 This script will send messages typed into the terminal, and display any message received.<br><br>
+
+print-nodedb.py<br>
+This script will list the nodes with telemetry in your nodedb.<br><br>
