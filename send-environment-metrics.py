@@ -1,7 +1,12 @@
 from meshtastic import portnums_pb2, telemetry_pb2
-import meshtastic.serial_interface
 
+# For connection over serial
+import meshtastic.serial_interface
 interface = meshtastic.serial_interface.SerialInterface()
+
+# For connection over TCP
+# import meshtastic.tcp_interface
+# interface = meshtastic.tcp_interface.TCPInterface(hostname='192.168.1.42', noProto=False)
 
 BROADCAST_ADDR = 4294967295
 

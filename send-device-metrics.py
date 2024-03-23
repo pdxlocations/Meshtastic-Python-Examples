@@ -1,13 +1,18 @@
 from meshtastic import portnums_pb2, telemetry_pb2
-import meshtastic.serial_interface
 
+# For connection over serial
+import meshtastic.serial_interface
 interface = meshtastic.serial_interface.SerialInterface()
+
+# For connection over TCP
+# import meshtastic.tcp_interface
+# interface = meshtastic.tcp_interface.TCPInterface(hostname='192.168.1.42', noProto=False)
 
 BROADCAST_ADDR = 4294967295
 
 telemetry_data = telemetry_pb2.Telemetry()
 telemetry_data.device_metrics.battery_level = 69
-telemetry_data.device_metrics.voltage = 4.2
+telemetry_data.device_metrics.voltage = 4.1
 telemetry_data.device_metrics.channel_utilization = 42
 telemetry_data.device_metrics.air_util_tx = 1
 
