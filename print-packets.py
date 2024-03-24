@@ -1,5 +1,5 @@
 import meshtastic.serial_interface
-from meshtastic import mesh_pb2, storeforward_pb2
+from meshtastic import mesh_pb2, storeforward_pb2, paxcount_pb2
 from pubsub import pub
 
 interface = meshtastic.serial_interface.SerialInterface()
@@ -9,7 +9,7 @@ def idToHex(nodeId):
 
 def onReceive(packet, interface):
     # Print all packets
-    # print(f"{packet} \n\n") 
+    print(f"{packet} \n\n") 
 
     print("Received packet:")
     print(f"  From: {packet['from']} / {idToHex(packet['from'])}")
@@ -127,6 +127,15 @@ def onReceive(packet, interface):
                 settings = response.get('settings', {})
                 for key, value in settings.items():
                     print(f"        {key}: {value}")
+
+        elif packet['decoded'].get('portnum') == 'PAXCOUNTER_APP':
+            print("  Paxcounter Information:")
+            message = paxcount_pb2.Paxcount()
+            payload_bytes = packet['decoded'].get('payload', b'')
+            message.ParseFromString(payload_bytes)
+            print(f"    Wifi: {message.wifi}")
+            print(f"    BLE: {message.ble}")
+            print(f"    Uptime: {message.uptime}")
         
         else:
             print(f"  Decoded packet does not contain data we are looking for: {packet['decoded'].get('portnum', 'N/A')}")
