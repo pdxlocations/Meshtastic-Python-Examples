@@ -14,6 +14,8 @@ if iface.nodes:
             print("SNR:", node["snr"])
         if "lastHeard" in node:
             print("Last Heard:", node["lastHeard"])
+        if "hopsAway" in node:
+            print("Hops Away:", node["hopsAway"])
 
         if "position" in node:
             if "latitude" in node["position"]:
