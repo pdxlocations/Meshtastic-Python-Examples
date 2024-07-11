@@ -20,6 +20,8 @@ def onReceive(packet, interface):
         print(f"  SNR: {packet['rxSnr']}")
     if 'rxRssi' in packet:
         print(f"  RSSI: {packet['rxRssi']}")
+    if 'hopsAway' in packet:
+        print(f"  RSSI: {packet['hopsAway']}")
 
     if 'decoded' in packet:
         print(f"  Port Number: {packet['decoded'].get('portnum', 'N/A')}")

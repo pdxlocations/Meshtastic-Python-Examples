@@ -1,4 +1,7 @@
-from meshtastic import portnums_pb2, telemetry_pb2
+try:
+    from meshtastic.protobuf import portnums_pb2, telemetry_pb2
+except ImportError:
+    from meshtastic import portnums_pb2, telemetry_pb2
 
 # For connection over serial
 import meshtastic.serial_interface

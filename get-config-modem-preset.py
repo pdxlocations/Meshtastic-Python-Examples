@@ -1,5 +1,9 @@
 import meshtastic.serial_interface
-from meshtastic import config_pb2
+
+try:
+    from meshtastic.protobuf import config_pb2
+except ImportError:
+    from meshtastic import config_pb2
 
 interface = meshtastic.serial_interface.SerialInterface()
 
