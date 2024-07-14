@@ -1,6 +1,10 @@
 import meshtastic.serial_interface
-from meshtastic import mesh_pb2, storeforward_pb2, paxcount_pb2
 from pubsub import pub
+try:
+    from meshtastic.protobuf import mesh_pb2, storeforward_pb2, paxcount_pb2
+    from meshtastic import BROADCAST_NUM
+except ImportError:
+    from meshtastic import mesh_pb2, storeforward_pb2, paxcount_pb2, BROADCAST_NUM
 
 interface = meshtastic.serial_interface.SerialInterface()
 
