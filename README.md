@@ -30,5 +30,5 @@ send-position.py<br>
 Send a location to the mesh from your connected node.<br><br>
 
 serial-mqtt.py<br>
-Send JSON formatted packets to an MQTT broker from your connected node.  Useful for nRF's without WiFi, and for LAN-less configurations such as a node connected to a Raspberry Pi running Mosquitto without the need for a router<br><br>
+Send JSON formatted packets to an MQTT broker from your connected node.  Useful for nRF's without WiFi, and for LAN-less configurations such as a node connected via USB to a Raspberry Pi running Mosquitto.<br><br>
 
