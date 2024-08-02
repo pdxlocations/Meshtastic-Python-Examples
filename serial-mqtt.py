@@ -1,12 +1,7 @@
 import meshtastic.serial_interface
 import paho.mqtt.client as mqtt
-from meshtastic.protobuf import mesh_pb2
 from pubsub import pub
 import json
-
-# Configure serial port
-serial_port = '/dev/ttyUSB0'  # Change this to your serial port
-baud_rate = 9600
 
 # Configure MQTT broker
 mqtt_broker = 'mqtt.meshtastic.org'
@@ -14,7 +9,7 @@ mqtt_port = 1883
 mqtt_user = "meshdev"
 mqtt_pass = "large4cats"
 mqtt_topic = "msh/sMQTT/2/json/LongFast/"
-virtual_node = "deadbeef"
+virtual_node = "!deadbeef"
 
 def on_connect(client, userdata, flags, reason_code, properties):
     print(f"Connected with result code {reason_code}")
