@@ -30,8 +30,8 @@ def onReceive(packet, interface):
         print(f"  Hop Start: {packet['hopStart']}")
     if 'priority' in packet:
         print(f"  Priority: {packet['priority']}")
-    if 'hopsAway' in packet:
-        print(f"  Hops Away: {packet['hopsAway']}")
+    if 'viaMqtt' in packet:
+        print(f"  via MQTT: {packet['viaMqtt']}")
 
     if 'decoded' in packet:
         print(f"  Port Number: {packet['decoded'].get('portnum', 'N/A')}")
@@ -48,6 +48,8 @@ def onReceive(packet, interface):
                 print(f"    Role: {node_info.get('role', 'N/A')}")
             if 'isLicensed' in packet:
                 print(f"    Role: {node_info.get('isLicensed', 'N/A')}")
+            if 'hopsAway' in packet:
+                print(f"    Hops Away: {packet['hopsAway']}")
 
         elif packet['decoded'].get('portnum') == 'POSITION_APP':
             print("  Position:")
