@@ -18,6 +18,8 @@ def onReceive(packet, interface):
     print("Received packet:")
     print(f"  From: {packet['from']} / {idToHex(packet['from'])}")
     print(f"  To: {packet['to']} / {idToHex(packet['to'])}")
+    if 'channel' in packet:
+        print(f"  Channel: {packet['channel']}")
     if 'rxSnr' in packet:
         print(f"  SNR: {packet['rxSnr']}")
     if 'rxRssi' in packet:
@@ -27,7 +29,7 @@ def onReceive(packet, interface):
     if 'hopStart' in packet:
         print(f"  Hop Start: {packet['hopStart']}")
     if 'priority' in packet:
-        print(f"  Hop Start: {packet['priority']}")
+        print(f"  Priority: {packet['priority']}")
     if 'hopsAway' in packet:
         print(f"  Hops Away: {packet['hopsAway']}")
 
