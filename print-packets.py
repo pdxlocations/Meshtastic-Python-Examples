@@ -13,7 +13,7 @@ def idToHex(nodeId):
 
 def onReceive(packet, interface):
     # Print all packets
-    print(f"{packet} \n\n") 
+    # print(f"{packet} \n\n") 
 
     print("Received packet:")
     print(f"  From: {packet['from']} / {idToHex(packet['from'])}")
