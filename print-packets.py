@@ -18,16 +18,18 @@ def onReceive(packet, interface):
     print("Received packet:")
     print(f"  From: {packet['from']} / {idToHex(packet['from'])}")
     print(f"  To: {packet['to']} / {idToHex(packet['to'])}")
-    if 'hopLimit' in packet:
-        print(f"  Hop Limit: {packet['hopLimit']}")
     if 'rxSnr' in packet:
         print(f"  SNR: {packet['rxSnr']}")
     if 'rxRssi' in packet:
         print(f"  RSSI: {packet['rxRssi']}")
+    if 'hopLimit' in packet:
+        print(f"  Hop Limit: {packet['hopLimit']}")
+    if 'hopStart' in packet:
+        print(f"  Hop Start: {packet['hopStart']}")
+    if 'priority' in packet:
+        print(f"  Hop Start: {packet['priority']}")
     if 'hopsAway' in packet:
         print(f"  Hops Away: {packet['hopsAway']}")
-    if 'hopsStart' in packet:
-        print(f"  Hop Start: {packet['hopsStart']}")
 
     if 'decoded' in packet:
         print(f"  Port Number: {packet['decoded'].get('portnum', 'N/A')}")
@@ -75,6 +77,7 @@ def onReceive(packet, interface):
                 print(f"      Voltage: {device_metrics.get('voltage', 'N/A')}")
                 print(f"      Channel Utilization: {device_metrics.get('channelUtilization', 'N/A')}")
                 print(f"      Air Utilization Tx: {device_metrics.get('airUtilTx', 'N/A')}")
+                print(f"      Uptime Seconds: {device_metrics.get('uptimeSeconds', 'N/A')}")
 
             power_metrics = telemetry.get('powerMetrics', {})
             if power_metrics:
