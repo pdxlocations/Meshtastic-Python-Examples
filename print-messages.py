@@ -1,6 +1,6 @@
-import time
 import meshtastic.serial_interface
 from pubsub import pub
+import time
 
 interface = meshtastic.serial_interface.SerialInterface()
 
