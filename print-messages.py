@@ -1,3 +1,4 @@
+import time
 import meshtastic.serial_interface
 from pubsub import pub
 
@@ -12,4 +13,5 @@ def onReceive(packet, interface):
 pub.subscribe(onReceive, 'meshtastic.receive.text')
 
 while True:
+    time.sleep(1)
     pass
