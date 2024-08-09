@@ -2,6 +2,7 @@ import meshtastic.serial_interface
 import paho.mqtt.client as mqtt
 from pubsub import pub
 import json
+import time
 
 # Configure MQTT broker
 mqtt_broker = 'mqtt.meshtastic.org'
@@ -160,4 +161,5 @@ interface = meshtastic.serial_interface.SerialInterface()
 pub.subscribe(onReceive, 'meshtastic.receive')
 
 while True:
+    time.sleep(1)
     pass

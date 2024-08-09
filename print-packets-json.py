@@ -1,6 +1,7 @@
 import meshtastic.serial_interface
 from pubsub import pub
 import json
+import time
 
 interface = meshtastic.serial_interface.SerialInterface()
 
@@ -11,4 +12,5 @@ def onReceive(packet, interface):
 pub.subscribe(onReceive, 'meshtastic.receive')
 
 while True:
+    time.sleep(1)
     pass

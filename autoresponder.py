@@ -1,5 +1,6 @@
 import meshtastic.serial_interface
 from pubsub import pub
+import time
 
 reply_message = "Message Received"
 
@@ -22,4 +23,5 @@ def send_message(message):
     print (f"Sent: {reply_message}")
 
 while True:
+    time.sleep(1)
     pass

@@ -1,10 +1,9 @@
 import meshtastic.serial_interface
 from pubsub import pub
-try:
-    from meshtastic.protobuf import mesh_pb2, storeforward_pb2, paxcount_pb2
-    from meshtastic import BROADCAST_NUM
-except ImportError:
-    from meshtastic import mesh_pb2, storeforward_pb2, paxcount_pb2, BROADCAST_NUM
+from meshtastic.protobuf import mesh_pb2, storeforward_pb2, paxcount_pb2
+from meshtastic import BROADCAST_NUM
+import time
+
 
 interface = meshtastic.serial_interface.SerialInterface()
 
@@ -162,4 +161,5 @@ def onReceive(packet, interface):
 pub.subscribe(onReceive, 'meshtastic.receive')
 
 while True:
+    time.sleep(1)
     pass
