@@ -1,7 +1,5 @@
-try:
-    from meshtastic.protobuf import portnums_pb2, telemetry_pb2
-except ImportError:
-    from meshtastic import portnums_pb2, telemetry_pb2
+from meshtastic.protobuf import portnums_pb2, telemetry_pb2
+from meshtastic import BROADCAST_ADDR
 
 # For connection over serial
 import meshtastic.serial_interface
@@ -10,8 +8,6 @@ interface = meshtastic.serial_interface.SerialInterface()
 # For connection over TCP
 # import meshtastic.tcp_interface
 # interface = meshtastic.tcp_interface.TCPInterface(hostname='192.168.1.42', noProto=False)
-
-BROADCAST_ADDR = 4294967295
 
 telemetry_data = telemetry_pb2.Telemetry()
 telemetry_data.environment_metrics.temperature = 352.222
