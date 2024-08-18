@@ -14,7 +14,6 @@ file_path = 'received_data.json'
 def onReceive(packet, interface):
 
     if packet['from'] != local_node_id:
-        # json_packet = json.dumps(packet, indent=4, default=str)
         json_packet = json.dumps(packet, indent=2, default=lambda s: " ".join(str(s).split()))
 
         # Read the existing content and update it
@@ -58,7 +57,7 @@ def update_plots(frame):
             ax1.bar(portnum_counts.keys(), portnum_counts.values(), color='b', label='Portnums')
             # ax1.set_xlabel('Portnums')
             ax1.set_ylabel('Count')
-            ax1.set_title('Portnums Frequency Over Time')
+            ax1.set_title('Portnums Frequency')
             ax1.legend()
             ax1.tick_params(axis='x', rotation=90)  # Rotate x-axis labels to vertical
             
@@ -68,7 +67,7 @@ def update_plots(frame):
             ax2.bar(from_counts_str.keys(), from_counts_str.values(), color='r', label='From Numbers')
             # ax2.set_xlabel('From Numbers')
             ax2.set_ylabel('Count')
-            ax2.set_title('From Numbers Frequency Over Time')
+            ax2.set_title('From Numbers Frequency')
             ax2.legend()
             ax2.tick_params(axis='x', rotation=90)  # Rotate x-axis labels to vertical
 
