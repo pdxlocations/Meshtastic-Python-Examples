@@ -56,17 +56,17 @@ def update_plots(frame):
             # Plot portnum counts
             ax1.clear()
             ax1.bar(portnum_counts.keys(), portnum_counts.values(), color='b', label='Portnums')
-            ax1.set_xlabel('Portnums')
+            # ax1.set_xlabel('Portnums')
             ax1.set_ylabel('Count')
             ax1.set_title('Portnums Frequency Over Time')
             ax1.legend()
+            ax1.tick_params(axis='x', rotation=90)  # Rotate x-axis labels to vertical
             
             # Plot from counts
             ax2.clear()
-            # Convert 'from' values to strings for better plotting
             from_counts_str = {str(key): value for key, value in from_counts.items()}
             ax2.bar(from_counts_str.keys(), from_counts_str.values(), color='r', label='From Numbers')
-            ax2.set_xlabel('From Numbers')
+            # ax2.set_xlabel('From Numbers')
             ax2.set_ylabel('Count')
             ax2.set_title('From Numbers Frequency Over Time')
             ax2.legend()
