@@ -14,6 +14,15 @@ List the nodes with telemetry in the nodedb of the connected node.<br><br>
 print-packets-basic.py<br>
 This script print all data packets.<br><br>
 
+print-packets-json-log-and-plot.py<br>
+This script print all data packets in json format, saves to a file and creates bar charts for portnum and node number.<br><br>
+
+print-packets-json-log.py<br>
+This script print all data packets in json format, and saves to a json file.<br><br>
+
+print-packets-json.py<br>
+This script print all data packets in json format.<br><br>
+
 print-packets.py<br>
 Parse and print all data packets.<br><br>
 
