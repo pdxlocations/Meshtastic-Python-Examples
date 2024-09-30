@@ -24,4 +24,3 @@ def send_message(message):
 
 while True:
     time.sleep(1)
-    pass
