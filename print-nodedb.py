@@ -4,11 +4,17 @@ if iface.nodes:
     for node in iface.nodes.values():
         # print (node)
 
+        print("Node Num:", node["num"])
         print("Node ID:", node["user"]["id"])
         print("Long Name:", node["user"]["longName"])
         print("Short Name:", node["user"]["shortName"])
-        print("MAC Address:", node["user"]["macaddr"])
         print("Hardware Model:", node["user"]["hwModel"])
+        if  "role" in node["user"]:
+            print("Role:", node["user"]["role"])
+        if  "macaddr" in node["user"]:
+            print("MAC Address:", node["user"]["macaddr"])
+        if "publicKey" in node["user"]:
+            print("Public Key: ", node["user"]["publicKey"])
 
         if "snr" in node:
             print("SNR:", node["snr"])
@@ -36,6 +42,8 @@ if iface.nodes:
                 print("Channel Utilization:", node["deviceMetrics"]["channelUtilization"])
             if "airUtilTx" in node["deviceMetrics"]:
                 print("Air Util Tx:", node["deviceMetrics"]["airUtilTx"])
+            if "uptimeSeconds" in node["deviceMetrics"]:
+                print("Uptime Seconds: ", node["deviceMetrics"]["uptimeSeconds"])
 
         print("\n")
 iface.close()
