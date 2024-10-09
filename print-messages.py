@@ -14,4 +14,3 @@ pub.subscribe(onReceive, 'meshtastic.receive.text')
 
 while True:
     time.sleep(1)
-    pass
