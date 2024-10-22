@@ -3,7 +3,6 @@ from pubsub import pub
 import time
 
 interface = meshtastic.serial_interface.SerialInterface()
-local_node_id = interface.getNode('^local').nodeNum
 
 def onReceive(packet, interface):
     if 'decoded' in packet and packet['decoded']['portnum'] == 'TRACEROUTE_APP':
