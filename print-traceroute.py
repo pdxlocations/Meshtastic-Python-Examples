@@ -7,10 +7,21 @@ interface = meshtastic.serial_interface.SerialInterface()
 def onReceive(packet, interface):
     if 'decoded' in packet and packet['decoded']['portnum'] == 'TRACEROUTE_APP':
 
-        message = f"{packet['from']} --> "
+        routeBack = packet['decoded']['traceroute'].get('routeBack', [])
         route = packet['decoded']['traceroute'].get('route', [])
-        route_str = ' -> '.join(map(str, route))
-        message += f"{route_str} --> {packet['to']}"
+
+        message = f"{packet['to']}"
+
+        if routeBack:
+            message += f" --> {' -> '.join(map(str, routeBack))}"
+
+        message += f" --> {packet['from']}"
+
+        if route:
+            message += f" --> {' -> '.join(map(str, route))}"
+
+        message += f" --> {packet['to']}"
+
         print(message)
 
 pub.subscribe(onReceive, 'meshtastic.receive')
