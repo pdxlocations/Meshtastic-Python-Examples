@@ -13,12 +13,12 @@ def onReceive(packet, interface):
         message = f"{packet['to']}"
 
         if routeBack:
-            message += f" --> {' -> '.join(map(str, routeBack))}"
+            message += f" --> {' --> '.join(map(str, routeBack))}"
 
         message += f" --> {packet['from']}"
 
         if route:
-            message += f" --> {' -> '.join(map(str, route))}"
+            message += f" --> {' --> '.join(map(str, route))}"
 
         message += f" --> {packet['to']}"
 
