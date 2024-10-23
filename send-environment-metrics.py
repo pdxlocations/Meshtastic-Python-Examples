@@ -1,5 +1,6 @@
 from meshtastic.protobuf import portnums_pb2, telemetry_pb2
 from meshtastic import BROADCAST_ADDR
+import time
 
 # For connection over serial
 import meshtastic.serial_interface
@@ -10,6 +11,7 @@ interface = meshtastic.serial_interface.SerialInterface()
 # interface = meshtastic.tcp_interface.TCPInterface(hostname='192.168.1.42', noProto=False)
 
 telemetry_data = telemetry_pb2.Telemetry()
+telemetry_data.time = int(time.time())
 telemetry_data.environment_metrics.temperature = 352.222
 telemetry_data.environment_metrics.relative_humidity = 69
 # telemetry_data.environment_metrics.barometric_pressure = 0
