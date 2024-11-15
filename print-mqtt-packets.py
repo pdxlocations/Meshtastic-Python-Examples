@@ -40,7 +40,7 @@ def on_message(client, userdata, msg):
     portNumInt = decoded_mp.decoded.portnum
     handler = protocols.get(portNumInt)
     pb = None
-    if handler.protobufFactory is not None:
+    if handler is not None and handler.protobufFactory is not None:
         pb = handler.protobufFactory()
         pb.ParseFromString(decoded_mp.decoded.payload)
 
