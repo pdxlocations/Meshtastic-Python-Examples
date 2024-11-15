@@ -9,7 +9,7 @@ BROKER = "mqtt.meshtastic.org"
 USER = "meshdev"
 PASS = "large4cats"
 PORT = 1883
-TOPIC = "msh/US/2/e/LongFast/#"
+TOPICS = ["msh/US/OR/2/e/LongFast/#","msh/US/OR/2/e/PKI/#"]
 KEY = "AQ=="
 KEY = "1PG7OiApB1nwvP+rz05pAQ==" if KEY == "AQ==" else KEY
 
@@ -17,7 +17,9 @@ KEY = "1PG7OiApB1nwvP+rz05pAQ==" if KEY == "AQ==" else KEY
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Connected to MQTT broker!")
-        client.subscribe(TOPIC)
+        for topic in TOPICS:
+            client.subscribe(topic)
+            print(f"Subscribed to topic: {topic}")
     else:
         print(f"Failed to connect, return code {rc}")
 
@@ -80,7 +82,6 @@ client.on_message = on_message
 client.username_pw_set(USER, PASS)
 try:
     client.connect(BROKER, PORT, keepalive=60)
-    print(f"Listening for messages on topic: {TOPIC}")
     client.loop_forever()
 except Exception as e:
     print(f"An error occurred: {e}")
