@@ -9,7 +9,7 @@ BROKER = "mqtt.meshtastic.org"
 USER = "meshdev"
 PASS = "large4cats"
 PORT = 1883
-TOPICS = ["msh/US/OR/2/e/LongFast/#","msh/US/OR/2/e/PKI/#"]
+TOPICS = ["msh/US/2/e/LongFast/#","msh/US/2/e/PKI/#"]
 KEY = "AQ=="
 KEY = "1PG7OiApB1nwvP+rz05pAQ==" if KEY == "AQ==" else KEY
 
@@ -74,7 +74,8 @@ def decrypt_packet(mp, key):
 
     except Exception as e:
         print(f"Failed to decrypt: {e}")
-        return None
+        data = mesh_pb2.Data()
+        return data
 
 client = mqtt.Client()
 client.on_connect = on_connect
