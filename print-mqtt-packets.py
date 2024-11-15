@@ -9,7 +9,7 @@ BROKER = "mqtt.meshtastic.org"
 USER = "meshdev"
 PASS = "large4cats"
 PORT = 1883
-TOPICS = ["msh/US/2/e/LongFast/#","msh/US/2/e/PKI/#"]
+TOPICS = ["msh/US/2/e/PKI/#","msh/US/2/e/LongFast/#"]
 KEY = "AQ=="
 KEY = "1PG7OiApB1nwvP+rz05pAQ==" if KEY == "AQ==" else KEY
 
@@ -29,26 +29,27 @@ def on_message(client, userdata, msg):
     se.ParseFromString(msg.payload)
     decoded_mp = se.packet
 
-    # Decrypt the payload if necessary
+    # Try to decrypt the payload if it is encrypted
     if decoded_mp.HasField("encrypted") and not decoded_mp.HasField("decoded"):
         decoded_data = decrypt_packet(decoded_mp, KEY)
         if decoded_data is None:
-            print("Decryption failed; skipping message")
-            return
-    else:
-        decoded_data = decoded_mp.decoded
-    decoded_mp.decoded.CopyFrom(decoded_data)
+            print("Decryption failed; retaining original encrypted payload")
+        else:
+            decoded_mp.decoded.CopyFrom(decoded_data)
 
-    portNumInt = decoded_mp.decoded.portnum
-    handler = protocols.get(portNumInt)
+    # Attempt to process the decrypted or encrypted payload
+    portNumInt = decoded_mp.decoded.portnum if decoded_mp.HasField("decoded") else None
+    handler = protocols.get(portNumInt) if portNumInt else None
+
     pb = None
     if handler is not None and handler.protobufFactory is not None:
         pb = handler.protobufFactory()
         pb.ParseFromString(decoded_mp.decoded.payload)
 
     if pb:
-        pb = str(pb).replace('\n', ' ').replace('\r', ' ').strip()
-        decoded_mp.decoded.payload = pb.encode("utf-8")
+        # Clean and update the payload
+        pb_str = str(pb).replace('\n', ' ').replace('\r', ' ').strip()
+        decoded_mp.decoded.payload = pb_str.encode("utf-8")
 
     print(decoded_mp)
 
@@ -74,8 +75,7 @@ def decrypt_packet(mp, key):
 
     except Exception as e:
         print(f"Failed to decrypt: {e}")
-        data = mesh_pb2.Data()
-        return data
+        return None
 
 client = mqtt.Client()
 client.on_connect = on_connect
