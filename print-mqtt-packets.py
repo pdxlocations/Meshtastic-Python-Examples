@@ -74,7 +74,6 @@ def decrypt_packet(mp, key):
         return data
 
     except Exception as e:
-        print(f"Failed to decrypt: {e}")
         return None
 
 client = mqtt.Client()
