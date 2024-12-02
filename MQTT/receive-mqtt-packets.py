@@ -50,7 +50,6 @@ def on_message(client, userdata, msg):
         # Clean and update the payload
         pb_str = str(pb).replace('\n', ' ').replace('\r', ' ').strip()
         decoded_mp.decoded.payload = pb_str.encode("utf-8")
-
     print(decoded_mp)
 
 
