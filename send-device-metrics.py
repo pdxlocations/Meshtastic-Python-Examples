@@ -4,6 +4,8 @@ try:
 except ImportError:
     from meshtastic import portnums_pb2, telemetry_pb2, BROADCAST_NUM
 
+import time
+
 # For connection over serial
 import meshtastic.serial_interface
 interface = meshtastic.serial_interface.SerialInterface()
@@ -17,6 +19,7 @@ telemetry_data.device_metrics.battery_level = 69
 telemetry_data.device_metrics.voltage = 4.1
 telemetry_data.device_metrics.channel_utilization = 42
 telemetry_data.device_metrics.air_util_tx = 1
+telemetry_data.time = int(time.time())
 
 interface.sendData(
     telemetry_data,
