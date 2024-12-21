@@ -11,7 +11,8 @@ user.id = me['id']
 user.long_name = me['longName']
 user.short_name = me['shortName']
 user.hw_model = mesh_pb2.HardwareModel.Value(me['hwModel'])
-user.role = config_pb2.Config.DeviceConfig.Role.Value(me['role'])
+if user.role:
+    user.role = config_pb2.Config.DeviceConfig.Role.Value(me['role'])
 
 interface.sendData(
     user,
