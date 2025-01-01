@@ -1,2 +1,4 @@
 .DS_Store
 received_data.json
+.venv/
+venv/
