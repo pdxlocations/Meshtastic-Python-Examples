@@ -1,0 +1,13 @@
+import meshtastic.serial_interface
+import json
+
+interface = meshtastic.serial_interface.SerialInterface()
+
+my_node_info = interface.getMyNodeInfo()
+
+# print (my_node_info)
+# print (my_node_info['position']['latitude'])
+
+print(json.dumps(my_node_info, indent=4))
+
+interface.close()
