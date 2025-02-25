@@ -6,6 +6,8 @@ from pubsub import pub
 import meshtastic.tcp_interface
 
 host = '192.168.86.45'
+test_connection_seconds = 10
+retry_connection_seconds = 3
 
 # Function to get firmware version
 def getNodeFirmware(interface):
@@ -27,7 +29,7 @@ def getNodeFirmware(interface):
 # Async function to retry connection
 async def retry_interface():
     print("Retrying connection to the interface...")
-    await asyncio.sleep(3)  # Wait before retrying
+    await asyncio.sleep(retry_connection_seconds)  # Wait before retrying
 
     try:
         interface = meshtastic.tcp_interface.TCPInterface(hostname=host)
@@ -60,7 +62,7 @@ async def check_and_reconnect(interface):
 # Main watchdog loop
 async def watchdog(interface):
     while True:
-        await asyncio.sleep(20)
+        await asyncio.sleep(test_connection_seconds)
         interface = await check_and_reconnect(interface)
         if interface:
             print("Interface is connected.")
