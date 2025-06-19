@@ -1,4 +1,4 @@
-
+import base64
 from meshtastic.protobuf import mesh_pb2, config_pb2
 from meshtastic import BROADCAST_NUM
 import meshtastic.serial_interface
@@ -11,6 +11,7 @@ user.id = me['id']
 user.long_name = me['longName']
 user.short_name = me['shortName']
 user.hw_model = mesh_pb2.HardwareModel.Value(me['hwModel'])
+user.public_key = base64.b64decode(me['publicKey'])
 if user.role:
     user.role = config_pb2.Config.DeviceConfig.Role.Value(me['role'])
 
