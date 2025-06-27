@@ -19,7 +19,7 @@ def generate_menu_from_protobuf(message_instance):
 
 # Instantiate protobuf objects
 user = mesh_pb2.User()
-user_settings = ["long_name", "short_name", "is_licensed"]
+user_settings = ["long_name", "short_name", "is_licensed","is_unmessagable"]
 user_config = generate_menu_from_protobuf(user)
 user_config = {key: value if value != "" else "" for key, value in user_config.items() if key in user_settings}
 
