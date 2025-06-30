@@ -15,6 +15,6 @@ lora_config = ourNode.localConfig.lora
 modem_preset_enum = lora_config.modem_preset
 
 # Get the string representation of the enum value
-modem_preset_string = config_pb2._CONFIG_LORACONFIG_MODEMPRESET.values_by_number[modem_preset_enum].name
+modem_preset_string = config_pb2.Config.LoRaConfig.ModemPreset.Name(modem_preset_enum)
 
 print(modem_preset_string)
