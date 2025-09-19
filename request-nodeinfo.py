@@ -3,9 +3,10 @@ import meshtastic.serial_interface
 from pubsub import pub
 import time
 
+targetid = 1623194643
+
 interface = meshtastic.serial_interface.SerialInterface()
 user = mesh_pb2.User()
-targetid = 1623194643
 
 def onReceive(packet, interface):
     if packet['from'] == targetid:
@@ -17,6 +18,7 @@ interface.sendData(
     user,
     destinationId=targetid,
     portNum=meshtastic.portnums_pb2.NODEINFO_APP,
+
     wantResponse=True,
 )
 
