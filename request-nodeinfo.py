@@ -18,7 +18,6 @@ interface.sendData(
     user,
     destinationId=targetid,
     portNum=meshtastic.portnums_pb2.NODEINFO_APP,
-
     wantResponse=True,
 )
 
