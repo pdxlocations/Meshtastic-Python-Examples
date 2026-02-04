@@ -27,6 +27,8 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     se = mqtt_pb2.ServiceEnvelope()
     se.ParseFromString(msg.payload)
+    if se.gateway_id:
+        print(f"Gateway ID: {se.gateway_id}")
     decoded_mp = se.packet
 
     # Try to decrypt the payload if it is encrypted
